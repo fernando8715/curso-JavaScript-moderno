@@ -27,7 +27,7 @@ const eliminarCurso = (event) => {
         elementosCarrito = elementosCarrito.filter(curso => curso.id !== cursoId );
     }
 
-    crearCarritoHtml(elementosCarrito);    
+    crearCarritoHtml(elementosCarrito);   
 }
 
 
@@ -56,17 +56,15 @@ const informacionCurso = (curso)=> {
                 return curso;
             }
         })
-        elementosCarrito = [...curso]
+        elementosCarrito = [...curso];
     }else{
         elementosCarrito = [...elementosCarrito, infoCurso];
     }
-
     crearCarritoHtml(elementosCarrito);
-    // console.log(elementosCarrito);
 }
 
 
-const crearCarritoHtml = (elementosCarrito) => {
+const crearCarritoHtml = () => {
 
     limpiarHtml();
 
@@ -94,7 +92,8 @@ const crearCarritoHtml = (elementosCarrito) => {
         `
         pedido.appendChild(row);
     });
-}
+    guardarLocalStorage();
+};
 
 
 
@@ -103,6 +102,18 @@ const limpiarHtml = () => {
     while(pedido.firstChild){
         pedido.removeChild(pedido.firstChild)
     }
+};
+
+
+
+const guardarLocalStorage = ()=>{
+    localStorage.setItem('cursos', JSON.stringify(elementosCarrito));
+};
+
+
+const cargarLocalStorage = ()=>{
+    elementosCarrito = JSON.parse( localStorage.getItem('cursos')) || [];
+    crearCarritoHtml();
 }
 
 
@@ -111,9 +122,12 @@ const limpiarHtml = () => {
 // Eventos
 
 const eventos = () => {
-    
     listaCursos.addEventListener('click', agregarCurso);
+    
     carrito.addEventListener('click', eliminarCurso);
+
+    document.addEventListener('DOMContentLoaded', cargarLocalStorage);
+
     vaciarCarrito.addEventListener('click', ()=>{
         elementosCarrito = [];
         limpiarHtml();

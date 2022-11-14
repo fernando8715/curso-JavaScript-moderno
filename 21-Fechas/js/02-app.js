@@ -1,0 +1,1 @@
+console.log(moment().format('DD MMMM YYYY hh:mm:ss'));
