@@ -1,6 +1,6 @@
 const listaCursos = document.querySelector('#lista-cursos')
-const carrito = document.querySelector('#carrito');
 const pedido = document.querySelector('#lista-carrito tbody');
+const carrito = document.querySelector('#carrito');
 const vaciarCarrito = document.querySelector('#vaciar-carrito');
 
 let elementosCarrito = [];
@@ -15,23 +15,6 @@ const agregarCurso = (event) => {
         informacionCurso(curso);
     }
 };
-
-
-
-const eliminarCurso = (event) => {
-    const borrar = event.target.classList.contains('borrar-curso');
-
-    const cursoId = event.target.getAttribute('data-id');
-    
-    if(borrar){
-        elementosCarrito = elementosCarrito.filter(curso => curso.id !== cursoId );
-    }
-
-    crearCarritoHtml(elementosCarrito);   
-}
-
-
-
 
 
 const informacionCurso = (curso)=> {
@@ -104,6 +87,19 @@ const limpiarHtml = () => {
     }
 };
 
+
+
+const eliminarCurso = (event) => {
+    const borrar = event.target.classList.contains('borrar-curso');
+
+    const cursoId = event.target.getAttribute('data-id');
+    
+    if(borrar){
+        elementosCarrito = elementosCarrito.filter(curso => curso.id !== cursoId );
+    }
+
+    crearCarritoHtml(); 
+}
 
 
 const guardarLocalStorage = ()=>{

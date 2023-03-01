@@ -48,19 +48,28 @@ function mostrarAlerta(mensaje) {
 
 }
 
-function buscarImagenes() {
+async function buscarImagenes() {
 
     const termino = document.querySelector('#termino').value;
 
-    const key = '';
+    const key = '33403423-1beb71eb1e9c4439c6f22035b';
     const url = `https://pixabay.com/api/?key=${key}&q=${termino}&per_page=${registrosPorPagina}&page=${paginaActual}`;
 
-    fetch(url)
-        .then(respuesta => respuesta.json())
-        .then(resultado => {
-            totalPaginas = calcularPaginas(resultado.totalHits);
-            mostrarImagenes(resultado.hits);
-        })
+    try {
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+        totalPaginas = calcularPaginas(resultado.totalHits);
+        mostrarImagenes(resultado.hits);
+    } catch (error) {
+        console.log(error);
+    }
+
+    // fetch(url)
+    //     .then(respuesta => respuesta.json())
+    //     .then(resultado => {
+    //         totalPaginas = calcularPaginas(resultado.totalHits);
+    //         mostrarImagenes(resultado.hits);
+    //     })
 }
 
 // Generador que va a registrar la cantidad de elementos de acuerdo a las paginas
@@ -84,12 +93,12 @@ function mostrarImagenes(imagenes) {
 
     // Iterar sobre el arreglo de imagenes y construir el HTML
     imagenes.forEach( imagen => {
-        const { previewURL, likes, views, largeImageURL } = imagen;
+        const { previewURL, likes, views, largeImageURL, tags } = imagen;
 
         resultado.innerHTML += `
             <div class="w-1/2 md:w-1/3 lg:w-1/4 p-3 mb-4">
                 <div class="bg-white">
-                    <img class="w-full" src="${previewURL}" >
+                    <img loading="lazy" class="w-full" src="${previewURL}" alt="${tags}" >
 
                     <div class="p-4">
                         <p class="font-bold"> ${likes} <span class="font-light"> Me Gusta </span> </p>
