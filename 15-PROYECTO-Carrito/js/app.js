@@ -69,9 +69,7 @@ const crearCarritoHtml = () => {
             <td>
                 ${cantidad}            
             </td>
-            <td>
-                <a href ="#" class= "borrar-curso" data-id="${id}"> X </a>
-            </td>
+            <a href ="#" class= "borrar-curso" data-id="${id}"> X </a>
         `
         pedido.appendChild(row);
     });
